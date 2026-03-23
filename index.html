@@ -262,22 +262,24 @@
 
     .stations{
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap:14px;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap:16px;
     }
 
     .station{
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
-      padding:12px;
-      background: rgba(0,0,0,.18);
-      cursor:pointer;
-      min-height:170px;
       display:flex;
       align-items:center;
       justify-content:center;
-      overflow:hidden;
       width:100%;
+      min-height:170px;
+      aspect-ratio: 1 / 1;
+      padding:0;
+      margin:0;
+      border:1px solid #666;
+      border-radius:16px;
+      background: transparent;
+      cursor:pointer;
+      overflow:hidden;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -287,11 +289,20 @@
 
     .station img{
       width:100%;
-      height:140px;
-      object-fit:contain;
+      height:100%;
+      object-fit:cover;
       display:block;
       border-radius:12px;
       background: rgba(255,255,255,.03);
+    }
+
+    .spotify-float{
+      position: fixed;
+      top: 80px;
+      right: 32px;
+      width: 170px;
+      min-height: 170px;
+      aspect-ratio: 1 / 1;
     }
 
     .hint{
@@ -321,19 +332,11 @@
       </div>
     </header>
 
-    <div class="grid">
-      <section class="card">
-        <div class="hd">
-          <h2>Spotify</h2>
-          <span></span>
-        </div>
-        <div class="bd">
-          <button class="btn-primary" onclick="openApp('spotify:')">
-            Open Spotify
-          </button>
-        </div>
-      </section>
+    <button class="station spotify-float" onclick="openApp('spotify:')">
+      <img src="spotify.svg" alt="Spotify">
+    </button>
 
+    <div class="grid">
       <section class="card">
         <div class="hd">
           <h2>Radio</h2>
@@ -359,21 +362,21 @@
         </div>
         <div class="bd">
           <div class="stations">
-            <button class="station" onclick="play('RTÉ Radio 1','https://icecast.rte.ie/radio1')">
-              <img src="file:///storage/emulated/0/web/rteradio1.png" alt="RTÉ Radio 1">
+            <button class="station" onclick="play('RTE 1','https://icecast.rte.ie/radio1')">
+              <img src="rteradio1.png" alt="RTE Radio 1">
             </button>
 
             <button class="station" onclick="play('Sunshine 106.8','https://playerservices.streamtheworld.com/api/livestream-redirect/SUNSHINE_106_8AAC.aac')">
-              <img src="file:///storage/emulated/0/web/sunshine1068.png" alt="Sunshine 106.8">
+              <img src="sunshine1068.png" alt="Sunshine 106.8">
             </button>
 
             <button class="station" onclick="play('East Coast FM','https://playerservices.streamtheworld.com/api/livestream-redirect/EAST_COAST_FM.mp3')">
-              <img src="file:///storage/emulated/0/web/eastcoastfm.png" alt="East Coast FM">
+              <img src="eastcoastfm.png" alt="East Coast FM">
             </button>
-          </div>
 
-          <div class="hint">
-            Tap a station logo to start playback.
+            <button class="station" onclick="play('2FM','https://icecast.rte.ie/2fm')">
+              <img src="2fm.png" alt="RTE 2 FM">
+            </button>
           </div>
         </div>
       </section>
