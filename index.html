@@ -483,13 +483,18 @@
       background: rgba(255,255,255,.03);
     }
 
-    .spotify-float{
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      width: 170px;
-      min-height: 170px;
-      aspect-ratio: 1 / 1;
+    .spotify-card{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100%;
+      padding:16px;
+    }
+
+    .spotify-button{
+      width:min(100%, 170px);
+      min-height:170px;
+      aspect-ratio:1 / 1;
     }
 
     .hint{
@@ -513,11 +518,13 @@
         padding:12px;
       }
 
-      .spotify-float{
-        top: 12px;
-        right: 14px;
-        width: 116px;
-        min-height: 116px;
+      .spotify-card{
+        padding:12px;
+      }
+
+      .spotify-button{
+        width:min(100%, 116px);
+        min-height:116px;
       }
 
       .stations{
@@ -655,11 +662,13 @@
         font-size:9px;
       }
 
-      .spotify-float{
-        top: 10px;
-        right: 16px;
-        width: 88px;
-        min-height: 88px;
+      .spotify-card{
+        padding:8px;
+      }
+
+      .spotify-button{
+        width:min(100%, 84px);
+        min-height:84px;
       }
 
       .stations{
@@ -679,16 +688,12 @@
   </style>
 </head>
 
-<body class="theme-glass">
-  <div class="app">
-    <button class="station spotify-float" onclick="openSpotify()">
-      <img src="spotify.svg" alt="Spotify">
-    </button>
-
-    <div class="grid">
-      <section class="card">
-        <div class="hd">
-          <h2>Radio</h2>
+  <body class="theme-glass">
+    <div class="app">
+      <div class="grid">
+        <section class="card">
+          <div class="hd">
+            <h2>Radio</h2>
           <span></span>
         </div>
         <div class="bd">
@@ -752,8 +757,14 @@
         </div>
       </section>
 
-      <section class="card" style="grid-column: 1 / -1;">
-        <div class="hd">
+        <section class="card spotify-card">
+          <button class="station spotify-button" onclick="openSpotify()" aria-label="Open Spotify">
+            <img src="spotify.svg" alt="Spotify">
+          </button>
+        </section>
+
+        <section class="card" style="grid-column: 1 / -1;">
+          <div class="hd">
           <h2>Stations</h2>
           <span></span>
         </div>
