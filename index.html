@@ -80,80 +80,6 @@
       gap:14px;
     }
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:6px 4px 0;
-      flex-wrap:wrap;
-    }
-
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
-
-    .brand .title{
-      font-size:24px;
-      font-weight:800;
-      letter-spacing:.2px;
-    }
-
-    .brand .sub{
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .pill{
-      border:1px solid var(--stroke);
-      background: rgba(0,0,0,.18);
-      padding:10px 14px;
-      border-radius:999px;
-      box-shadow: var(--shadow);
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-      min-width:118px;
-      text-align:center;
-      backdrop-filter: blur(10px);
-    }
-
-    .themebar{
-      display:flex;
-      gap:8px;
-      border:1px solid var(--stroke);
-      background: rgba(0,0,0,.14);
-      border-radius:999px;
-      padding:6px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-    }
-
-    .chip{
-      border:0;
-      border-radius:999px;
-      padding:10px 12px;
-      color: var(--text);
-      background: transparent;
-      font-weight:750;
-      font-size:13px;
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .chip.active{
-      background: rgba(255,255,255,.12);
-      border:1px solid var(--stroke);
-    }
-
     .grid{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
@@ -559,8 +485,8 @@
 
     .spotify-float{
       position: fixed;
-      top: 80px;
-      right: 32px;
+      top: 18px;
+      right: 18px;
       width: 170px;
       min-height: 170px;
       aspect-ratio: 1 / 1;
@@ -579,28 +505,6 @@
         gap:10px;
       }
 
-      header{
-        padding:2px 0 0;
-      }
-
-      .brand .title{
-        font-size:20px;
-      }
-
-      .pill{
-        min-width:92px;
-        padding:8px 12px;
-      }
-
-      .themebar{
-        padding:4px;
-      }
-
-      .chip{
-        padding:8px 10px;
-        font-size:12px;
-      }
-
       .card .hd{
         padding:12px 12px 0;
       }
@@ -610,7 +514,7 @@
       }
 
       .spotify-float{
-        top: 92px;
+        top: 12px;
         right: 14px;
         width: 116px;
         min-height: 116px;
@@ -630,32 +534,6 @@
       .app{
         padding:10px 12px;
         gap:10px;
-      }
-
-      header{
-        padding:0;
-      }
-
-      .brand .title{
-        font-size:18px;
-      }
-
-      .brand .sub{
-        display:none;
-      }
-
-      .pill{
-        min-width:88px;
-        padding:7px 12px;
-      }
-
-      .themebar{
-        padding:4px;
-      }
-
-      .chip{
-        padding:7px 10px;
-        font-size:12px;
       }
 
       .grid{
@@ -777,7 +655,7 @@
       }
 
       .spotify-float{
-        top: 78px;
+        top: 10px;
         right: 16px;
         width: 108px;
         min-height: 108px;
@@ -798,22 +676,6 @@
 
 <body class="theme-glass">
   <div class="app">
-    <header>
-      <div class="brand">
-        <div class="title">Beach House</div>
-        <div class="sub"></div>
-      </div>
-
-      <div class="right">
-        <div class="themebar" id="themebar">
-          <button class="chip" data-theme="theme-glass">Glass</button>
-          <button class="chip" data-theme="theme-light">Light</button>
-          <button class="chip" data-theme="theme-radio">Radio</button>
-        </div>
-        <div class="pill" id="clock">--:--</div>
-      </div>
-    </header>
-
     <button class="station spotify-float" onclick="openApp('spotify:')">
       <img src="spotify.svg" alt="Spotify">
     </button>
@@ -914,38 +776,9 @@
   </div>
 
   <script>
-    function tick(){
-      const d = new Date();
-      const hh = String(d.getHours()).padStart(2,'0');
-      const mm = String(d.getMinutes()).padStart(2,'0');
-      document.getElementById('clock').textContent = `${hh}:${mm}`;
-    }
-
-    tick();
-    setInterval(tick, 1000);
-
     function openApp(uri){
       window.location.href = uri;
     }
-
-    const THEME_KEY = "musicpanel_theme";
-
-    function applyTheme(theme){
-      document.body.classList.remove("theme-glass","theme-light","theme-radio");
-      document.body.classList.add(theme);
-      localStorage.setItem(THEME_KEY, theme);
-
-      document.querySelectorAll(".chip").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.theme === theme);
-      });
-    }
-
-    document.getElementById("themebar").addEventListener("click", (e) => {
-      const btn = e.target.closest(".chip");
-      if(btn) applyTheme(btn.dataset.theme);
-    });
-
-    applyTheme(localStorage.getItem(THEME_KEY) || "theme-glass");
 
     const audio = document.getElementById('radio');
     const nowTitle = document.getElementById('nowTitle');
