@@ -504,13 +504,22 @@
       background: rgba(255,255,255,.03);
     }
 
-    .spotify-float{
-      position:fixed;
-      top:16px;
-      right:16px;
+    .spotify-card{
       width:var(--tile-size);
+      min-width:var(--tile-size);
       min-height:var(--tile-size);
-      z-index:2;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+      justify-self:end;
+      align-self:start;
+    }
+
+    .spotify-button{
+      width:100%;
+      min-height:var(--tile-size);
+      aspect-ratio:1 / 1;
     }
 
     .hint{
@@ -532,11 +541,6 @@
 
       .grid{
         grid-template-columns:1fr;
-      }
-
-      .spotify-float{
-        top:12px;
-        right:12px;
       }
 
       .card .hd{
@@ -566,11 +570,6 @@
       .grid{
         gap:8px;
         grid-template-columns:minmax(0, 1fr) var(--tile-size);
-      }
-
-      .spotify-float{
-        top:8px;
-        right:10px;
       }
 
       .card .hd{
@@ -691,10 +690,6 @@
   <body class="theme-glass">
     <div class="debug-badge">TEST FILE: index.html</div>
     <div class="app">
-      <button class="station spotify-float" id="spotifyTile" onclick="openSpotify()" aria-label="Open Spotify">
-        <img src="spotify.svg" alt="Spotify">
-      </button>
-
       <div class="grid">
         <section class="card">
           <div class="hd">
@@ -761,6 +756,12 @@
           </div>
         </div>
       </section>
+
+        <section class="card spotify-card">
+          <button class="station spotify-button" onclick="openSpotify()" aria-label="Open Spotify">
+            <img src="spotify.svg" alt="Spotify">
+          </button>
+        </section>
 
         <section class="card" style="grid-column: 1 / -1;">
           <div class="hd">
@@ -829,24 +830,6 @@
     const dialLabel = document.getElementById('dialLabel');
     const tuner = document.getElementById('tuner');
     const signalBars = document.getElementById('signalBars');
-    const spotifyTile = document.getElementById('spotifyTile');
-
-    function syncSpotifyTileSize(){
-      const firstStationTile = document.querySelector('.stations .station');
-      if (!firstStationTile || !spotifyTile) return;
-
-      const rect = firstStationTile.getBoundingClientRect();
-      const cssTileSize = parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue('--tile-size')
-      );
-      const targetSize = Number.isFinite(cssTileSize) ? Math.min(rect.width, cssTileSize) : rect.width;
-      spotifyTile.style.width = `${targetSize}px`;
-      spotifyTile.style.minHeight = `${targetSize}px`;
-    }
-
-    window.addEventListener('load', syncSpotifyTileSize);
-    window.addEventListener('resize', syncSpotifyTileSize);
-    setTimeout(syncSpotifyTileSize, 300);
 
     const stationDialMap = {
       "RTE 1": 22,
