@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#111826" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <title>Music Panel</title>
 
   <style>
@@ -566,6 +571,227 @@
       font-size:12px;
       line-height:1.4;
       margin-top:10px;
+    }
+
+    @media (max-width: 900px){
+      .app{
+        padding:12px;
+        gap:10px;
+      }
+
+      header{
+        padding:2px 0 0;
+      }
+
+      .brand .title{
+        font-size:20px;
+      }
+
+      .pill{
+        min-width:92px;
+        padding:8px 12px;
+      }
+
+      .themebar{
+        padding:4px;
+      }
+
+      .chip{
+        padding:8px 10px;
+        font-size:12px;
+      }
+
+      .card .hd{
+        padding:12px 12px 0;
+      }
+
+      .card .bd{
+        padding:12px;
+      }
+
+      .spotify-float{
+        top: 92px;
+        right: 14px;
+        width: 116px;
+        min-height: 116px;
+      }
+
+      .stations{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap:12px;
+      }
+
+      .station{
+        min-height:120px;
+      }
+    }
+
+    @media (max-height: 900px) and (orientation: landscape){
+      .app{
+        padding:10px 12px;
+        gap:10px;
+      }
+
+      header{
+        padding:0;
+      }
+
+      .brand .title{
+        font-size:18px;
+      }
+
+      .brand .sub{
+        display:none;
+      }
+
+      .pill{
+        min-width:88px;
+        padding:7px 12px;
+      }
+
+      .themebar{
+        padding:4px;
+      }
+
+      .chip{
+        padding:7px 10px;
+        font-size:12px;
+      }
+
+      .grid{
+        gap:10px;
+      }
+
+      .card .hd{
+        padding:10px 10px 0;
+      }
+
+      .card .hd h2{
+        font-size:14px;
+      }
+
+      .card .bd{
+        padding:10px;
+      }
+
+      .radio-shell{
+        padding:12px;
+        border-radius:22px;
+      }
+
+      .radio-shell::before{
+        inset:7px;
+        border-radius:17px;
+      }
+
+      .radio-top{
+        margin-bottom:10px;
+      }
+
+      .radio-brand{
+        font-size:11px;
+        letter-spacing:.16em;
+      }
+
+      .status-pill{
+        padding:4px 8px;
+        font-size:10px;
+      }
+
+      .radio-panel{
+        padding:12px;
+      }
+
+      .freq-label{
+        margin-bottom:6px;
+        font-size:10px;
+      }
+
+      .radio-station{
+        font-size:22px;
+        margin-bottom:6px;
+      }
+
+      .radio-status{
+        gap:8px;
+        margin-bottom:10px;
+      }
+
+      .status-text{
+        font-size:12px;
+      }
+
+      .tuner-row{
+        grid-template-columns:minmax(0, 1fr) 84px;
+        gap:12px;
+      }
+
+      .tuner{
+        height:42px;
+        border-radius:13px;
+      }
+
+      .tuner-scale{
+        font-size:10px;
+      }
+
+      .radio-bottom{
+        margin-top:10px;
+      }
+
+      .signal{
+        min-height:22px;
+        gap:5px;
+      }
+
+      .signal span{
+        width:6px;
+      }
+
+      .signal span:nth-child(1){ height:6px; }
+      .signal span:nth-child(2){ height:10px; }
+      .signal span:nth-child(3){ height:14px; }
+      .signal span:nth-child(4){ height:18px; }
+
+      .radio-caption{
+        font-size:10px;
+      }
+
+      .power-wrap{
+        gap:6px;
+      }
+
+      .power-knob{
+        width:72px;
+        height:72px;
+        font-size:11px;
+      }
+
+      .power-knob::before{
+        top:10px;
+        height:14px;
+      }
+
+      .power-label{
+        font-size:10px;
+      }
+
+      .spotify-float{
+        top: 78px;
+        right: 16px;
+        width: 108px;
+        min-height: 108px;
+      }
+
+      .stations{
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap:10px;
+      }
+
+      .station{
+        min-height:100px;
+        border-radius:14px;
+      }
     }
   </style>
 </head>

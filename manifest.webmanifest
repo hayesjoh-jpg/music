@@ -1,0 +1,17 @@
+{
+  "name": "Beach House Music Panel",
+  "short_name": "Music Panel",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111826",
+  "theme_color": "#111826",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "spotify.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
