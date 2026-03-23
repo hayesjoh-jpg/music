@@ -688,7 +688,7 @@
 
   <body class="theme-glass">
     <div class="app">
-      <button class="station spotify-float" onclick="openSpotify()" aria-label="Open Spotify">
+      <button class="station spotify-float" id="spotifyTile" onclick="openSpotify()" aria-label="Open Spotify">
         <img src="spotify.svg" alt="Spotify">
       </button>
 
@@ -826,6 +826,20 @@
     const dialLabel = document.getElementById('dialLabel');
     const tuner = document.getElementById('tuner');
     const signalBars = document.getElementById('signalBars');
+    const spotifyTile = document.getElementById('spotifyTile');
+
+    function syncSpotifyTileSize(){
+      const firstStationTile = document.querySelector('.stations .station');
+      if (!firstStationTile || !spotifyTile) return;
+
+      const rect = firstStationTile.getBoundingClientRect();
+      spotifyTile.style.width = `${rect.width}px`;
+      spotifyTile.style.minHeight = `${rect.height}px`;
+    }
+
+    window.addEventListener('load', syncSpotifyTileSize);
+    window.addEventListener('resize', syncSpotifyTileSize);
+    setTimeout(syncSpotifyTileSize, 300);
 
     const stationDialMap = {
       "RTE 1": 22,
