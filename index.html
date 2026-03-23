@@ -24,6 +24,7 @@
       --r: 22px;
       --glowA: rgba(29,185,84,.28);
       --glowB: rgba(80,145,255,.22);
+      --tile-size:170px;
     }
 
     body.theme-light{
@@ -458,7 +459,7 @@
       align-items:center;
       justify-content:center;
       width:100%;
-      min-height:170px;
+      min-height:var(--tile-size);
       aspect-ratio: 1 / 1;
       padding:0;
       margin:0;
@@ -492,9 +493,9 @@
     }
 
     .spotify-button{
-      width:170px;
+      width:var(--tile-size);
       max-width:100%;
-      min-height:170px;
+      min-height:var(--tile-size);
       aspect-ratio:1 / 1;
     }
 
@@ -506,6 +507,10 @@
     }
 
     @media (max-width: 900px){
+      :root{
+        --tile-size:120px;
+      }
+
       .app{
         padding:12px;
         gap:10px;
@@ -519,22 +524,17 @@
         padding:12px;
       }
 
-      .spotify-button{
-        width:116px;
-        min-height:116px;
-      }
-
       .stations{
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap:12px;
       }
-
-      .station{
-        min-height:120px;
-      }
     }
 
     @media (max-height: 900px) and (orientation: landscape){
+      :root{
+        --tile-size:84px;
+      }
+
       .app{
         padding:8px 10px;
         gap:8px;
@@ -659,18 +659,12 @@
         font-size:9px;
       }
 
-      .spotify-button{
-        width:84px;
-        min-height:84px;
-      }
-
       .stations{
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap:8px;
       }
 
       .station{
-        min-height:84px;
         border-radius:12px;
       }
 
