@@ -79,6 +79,7 @@
       display:flex;
       flex-direction:column;
       gap:14px;
+      position:relative;
     }
 
     .grid{
@@ -485,22 +486,13 @@
       background: rgba(255,255,255,.03);
     }
 
-    .spotify-card{
+    .spotify-float{
+      position:absolute;
+      top:16px;
+      right:16px;
       width:var(--tile-size);
-      min-width:var(--tile-size);
       min-height:var(--tile-size);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:0;
-      justify-self:end;
-      align-self:start;
-    }
-
-    .spotify-button{
-      width:100%;
-      min-height:var(--tile-size);
-      aspect-ratio:1 / 1;
+      z-index:2;
     }
 
     .hint{
@@ -522,6 +514,11 @@
 
       .grid{
         grid-template-columns:1fr;
+      }
+
+      .spotify-float{
+        top:12px;
+        right:12px;
       }
 
       .card .hd{
@@ -551,6 +548,11 @@
       .grid{
         gap:8px;
         grid-template-columns:minmax(0, 1fr) var(--tile-size);
+      }
+
+      .spotify-float{
+        top:8px;
+        right:10px;
       }
 
       .card .hd{
@@ -753,11 +755,9 @@
         </div>
       </section>
 
-        <section class="card spotify-card">
-          <button class="station spotify-button" onclick="openSpotify()" aria-label="Open Spotify">
-            <img src="spotify.svg" alt="Spotify">
-          </button>
-        </section>
+        <button class="station spotify-float" onclick="openSpotify()" aria-label="Open Spotify">
+          <img src="spotify.svg" alt="Spotify">
+        </button>
 
         <section class="card" style="grid-column: 1 / -1;">
           <div class="hd">
