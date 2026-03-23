@@ -681,7 +681,7 @@
 
 <body class="theme-glass">
   <div class="app">
-    <button class="station spotify-float" onclick="openApp('spotify:')">
+    <button class="station spotify-float" onclick="openSpotify()">
       <img src="spotify.svg" alt="Spotify">
     </button>
 
@@ -783,6 +783,33 @@
   <script>
     function openApp(uri){
       window.location.href = uri;
+    }
+
+    function openSpotify(){
+      const fallbackUrl = 'https://open.spotify.com/';
+      const intentUrl = 'intent://open.spotify.com/#Intent;scheme=https;package=com.spotify.music;end';
+
+      try{
+        const frame = document.createElement('iframe');
+        frame.style.display = 'none';
+        frame.src = 'spotify:';
+        document.body.appendChild(frame);
+        setTimeout(() => frame.remove(), 1200);
+      } catch (e) {}
+
+      setTimeout(() => {
+        try{
+          window.location.href = intentUrl;
+        } catch (e) {
+          window.open(fallbackUrl, '_blank');
+        }
+      }, 250);
+
+      setTimeout(() => {
+        if (document.visibilityState === 'visible') {
+          window.open(fallbackUrl, '_blank');
+        }
+      }, 1200);
     }
 
     const audio = document.getElementById('radio');
