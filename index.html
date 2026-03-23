@@ -83,7 +83,7 @@
 
     .grid{
       display:grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr) var(--tile-size);
       gap:14px;
       align-items:start;
     }
@@ -485,6 +485,24 @@
       background: rgba(255,255,255,.03);
     }
 
+    .spotify-card{
+      width:var(--tile-size);
+      min-width:var(--tile-size);
+      min-height:var(--tile-size);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+      justify-self:end;
+      align-self:start;
+    }
+
+    .spotify-button{
+      width:100%;
+      min-height:var(--tile-size);
+      aspect-ratio:1 / 1;
+    }
+
     .hint{
       color:var(--muted);
       font-size:12px;
@@ -500,6 +518,10 @@
       .app{
         padding:12px;
         gap:10px;
+      }
+
+      .grid{
+        grid-template-columns:1fr;
       }
 
       .card .hd{
@@ -528,6 +550,7 @@
 
       .grid{
         gap:8px;
+        grid-template-columns:minmax(0, 1fr) var(--tile-size);
       }
 
       .card .hd{
@@ -730,6 +753,12 @@
         </div>
       </section>
 
+        <section class="card spotify-card">
+          <button class="station spotify-button" onclick="openSpotify()" aria-label="Open Spotify">
+            <img src="spotify.svg" alt="Spotify">
+          </button>
+        </section>
+
         <section class="card" style="grid-column: 1 / -1;">
           <div class="hd">
           <h2>Stations</h2>
@@ -737,10 +766,6 @@
         </div>
         <div class="bd">
           <div class="stations">
-            <button class="station" onclick="openSpotify()" aria-label="Open Spotify">
-              <img src="spotify.svg" alt="Spotify">
-            </button>
-
             <button class="station" onclick="play('RTE 1','https://icecast.rte.ie/radio1')">
               <img src="rteradio1.png" alt="RTE Radio 1">
             </button>
