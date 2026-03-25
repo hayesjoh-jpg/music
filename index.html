@@ -25,6 +25,7 @@
       --glowA: rgba(29,185,84,.28);
       --glowB: rgba(80,145,255,.22);
       --tile-size:170px;
+      --spotify-slot:170px;
     }
 
     body.theme-light{
@@ -82,27 +83,9 @@
       position:relative;
     }
 
-    .debug-badge{
-      position:fixed;
-      top:10px;
-      right:10px;
-      z-index:9999;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(255,64,64,.92);
-      color:#fff;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      box-shadow:0 10px 24px rgba(0,0,0,.28);
-      pointer-events:none;
-    }
-
     .grid{
       display:grid;
-      grid-template-columns: minmax(0, 1fr) var(--tile-size);
+      grid-template-columns: minmax(0, 1fr) var(--spotify-slot);
       gap:14px;
       align-items:start;
     }
@@ -505,19 +488,19 @@
     }
 
     .spotify-card{
-      width:var(--tile-size);
-      min-width:var(--tile-size);
-      min-height:var(--tile-size);
+      width:100%;
+      min-width:0;
+      min-height:var(--spotify-slot);
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:0;
-      justify-self:end;
+      padding:12px;
+      justify-self:stretch;
       align-self:start;
     }
 
     .spotify-button{
-      width:100%;
+      width:var(--tile-size);
       min-height:var(--tile-size);
       aspect-ratio:1 / 1;
     }
@@ -560,6 +543,7 @@
     @media (max-height: 1100px) and (orientation: landscape){
       :root{
         --tile-size:150px;
+        --spotify-slot:220px;
       }
 
       .app{
@@ -569,7 +553,7 @@
 
       .grid{
         gap:8px;
-        grid-template-columns:minmax(0, 1fr) var(--tile-size);
+        grid-template-columns:minmax(0, 1fr) var(--spotify-slot);
       }
 
       .card .hd{
@@ -688,7 +672,6 @@
 </head>
 
   <body class="theme-glass">
-    <div class="debug-badge">TEST FILE: index.html</div>
     <div class="app">
       <div class="grid">
         <section class="card">
