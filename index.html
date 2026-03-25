@@ -492,11 +492,16 @@
       min-width:0;
       min-height:var(--spotify-slot);
       display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px;
+      flex-direction:column;
       justify-self:stretch;
       align-self:start;
+    }
+
+    .spotify-card .bd{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
     }
 
     .spotify-button{
@@ -741,9 +746,15 @@
       </section>
 
         <section class="card spotify-card">
-          <button class="station spotify-button" onclick="openSpotify()" aria-label="Open Spotify">
-            <img src="spotify.svg" alt="Spotify">
-          </button>
+          <div class="hd">
+            <h2>Spotify</h2>
+            <span></span>
+          </div>
+          <div class="bd">
+            <button class="station spotify-button" onclick="openSpotify()" aria-label="Open Spotify">
+              <img src="spotify.svg" alt="Spotify">
+            </button>
+          </div>
         </section>
 
         <section class="card" style="grid-column: 1 / -1;">
