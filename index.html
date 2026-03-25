@@ -472,10 +472,18 @@
       cursor:pointer;
       overflow:hidden;
       -webkit-tap-highlight-color: transparent;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
 
     .station:active{
       transform: translateY(1px);
+    }
+
+    .station.active-station{
+      transform: scale(1.06);
+      border-color: rgba(255,255,255,.92);
+      box-shadow: 0 0 0 2px rgba(255,255,255,.12), 0 14px 28px rgba(0,0,0,.24);
+      z-index:1;
     }
 
     .station img{
@@ -764,19 +772,19 @@
         </div>
         <div class="bd">
           <div class="stations">
-            <button class="station" onclick="play('RTE 1','https://icecast.rte.ie/radio1')">
+            <button class="station" data-station="RTE 1" onclick="play('RTE 1','https://icecast.rte.ie/radio1')">
               <img src="rteradio1.png" alt="RTE Radio 1">
             </button>
 
-            <button class="station" onclick="play('Sunshine 106.8','https://playerservices.streamtheworld.com/api/livestream-redirect/SUNSHINE_106_8AAC.aac')">
+            <button class="station" data-station="Sunshine 106.8" onclick="play('Sunshine 106.8','https://playerservices.streamtheworld.com/api/livestream-redirect/SUNSHINE_106_8AAC.aac')">
               <img src="sunshine1068.png" alt="Sunshine 106.8">
             </button>
 
-            <button class="station" onclick="play('East Coast FM','https://playerservices.streamtheworld.com/api/livestream-redirect/EAST_COAST_FM.mp3')">
+            <button class="station" data-station="East Coast FM" onclick="play('East Coast FM','https://playerservices.streamtheworld.com/api/livestream-redirect/EAST_COAST_FM.mp3')">
               <img src="eastcoastfm.png" alt="East Coast FM">
             </button>
 
-            <button class="station" onclick="play('2FM','https://icecast.rte.ie/2fm')">
+            <button class="station" data-station="2FM" onclick="play('2FM','https://icecast.rte.ie/2fm')">
               <img src="2fm.png" alt="RTE 2 FM">
             </button>
           </div>
@@ -824,6 +832,7 @@
     const dialLabel = document.getElementById('dialLabel');
     const tuner = document.getElementById('tuner');
     const signalBars = document.getElementById('signalBars');
+    const stationButtons = document.querySelectorAll('.stations .station');
 
     const stationDialMap = {
       "RTE 1": 22,
@@ -836,9 +845,16 @@
       tuner.style.setProperty('--needle-pos', `${position}%`);
     }
 
+    function setActiveStation(name){
+      stationButtons.forEach((button) => {
+        button.classList.toggle('active-station', button.dataset.station === name);
+      });
+    }
+
     setDial(50);
 
     function play(name, url){
+      setActiveStation(name);
       nowTitle.textContent = name;
       nowStatus.textContent = 'Tuning...';
       liveBadge.textContent = 'Live';
@@ -852,6 +868,7 @@
           nowStatus.textContent = 'Broadcasting now';
         })
         .catch(() => {
+          setActiveStation();
           nowStatus.textContent = 'Signal unavailable';
           liveBadge.textContent = 'Error';
           dialLabel.textContent = 'Retune';
@@ -863,6 +880,7 @@
       audio.pause();
       audio.removeAttribute('src');
       audio.load();
+      setActiveStation();
       nowTitle.textContent = 'Radio Off';
       nowStatus.textContent = 'Select a station to tune in';
       liveBadge.textContent = 'Standby';
