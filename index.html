@@ -25,6 +25,7 @@
       --glowA: rgba(29,185,84,.28);
       --glowB: rgba(80,145,255,.22);
       --tile-size:170px;
+      --station-tile-size:170px;
       --spotify-slot:170px;
     }
 
@@ -462,7 +463,8 @@
     }
 
     .stations .station{
-      flex:0 0 var(--tile-size);
+      flex:0 0 var(--station-tile-size);
+      min-height:var(--station-tile-size);
       scroll-snap-align:start;
     }
 
@@ -537,6 +539,7 @@
     @media (max-width: 900px){
       :root{
         --tile-size:120px;
+        --station-tile-size:170px;
       }
 
       .app{
@@ -564,6 +567,7 @@
     @media (max-height: 1100px) and (orientation: landscape){
       :root{
         --tile-size:150px;
+        --station-tile-size:170px;
         --spotify-slot:220px;
       }
 
