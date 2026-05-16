@@ -822,27 +822,27 @@
         </div>
         <div class="bd">
           <div class="stations">
-            <button class="station" data-station="RTE 1" onclick="play('RTE 1','https://icecast.rte.ie/radio1')">
+            <button class="station" data-station="RTE 1" data-url="https://icecast.rte.ie/radio1">
               <img src="rteradio1.png" alt="RTE Radio 1">
             </button>
 
-            <button class="station" data-station="Sunshine 106.8" onclick="play('Sunshine 106.8','https://playerservices.streamtheworld.com/api/livestream-redirect/SUNSHINE_106_8AAC.aac')">
+            <button class="station" data-station="Sunshine 106.8" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/SUNSHINE_106_8AAC.aac">
               <img src="sunshine1068.png" alt="Sunshine 106.8">
             </button>
 
-            <button class="station" data-station="East Coast FM" onclick="play('East Coast FM','https://playerservices.streamtheworld.com/api/livestream-redirect/EAST_COAST_FM.mp3')">
+            <button class="station" data-station="East Coast FM" data-url="https://playerservices.streamtheworld.com/api/livestream-redirect/EAST_COAST_FM.mp3">
               <img src="eastcoastfm.png" alt="East Coast FM">
             </button>
 
-            <button class="station" data-station="2FM" onclick="play('2FM','https://icecast.rte.ie/2fm')">
+            <button class="station" data-station="2FM" data-url="https://icecast.rte.ie/2fm">
               <img src="2fm.png" alt="RTE 2 FM">
             </button>
 
-            <button class="station" data-station="Q102" onclick="play('Q102','https://wg.cdn.tibus.net/q102MP3128')">
+            <button class="station" data-station="Q102" data-url="https://wg.cdn.tibus.net/q102MP3128">
               <img src="q102.svg" alt="Dublin's Q102">
             </button>
 
-            <button class="station" data-station="RTE Lyric FM" onclick="play('RTE Lyric FM','https://icecast2.rte.ie/lyric')">
+            <button class="station" data-station="RTE Lyric FM" data-url="https://icecast2.rte.ie/lyric">
               <img src="rtelyricfm.svg" alt="RTE Lyric FM">
             </button>
           </div>
@@ -921,17 +921,20 @@
     }
 
     if (stationsEl) {
+      let touchedStation = null;
       let touchStartX = 0;
       let dragStartScroll = 0;
       let didDrag = false;
       let isDraggingStations = false;
 
       stationsEl.addEventListener('touchstart', (event) => {
+        touchedStation = event.target.closest('.station');
         touchStartX = event.touches[0].clientX;
         dragStartScroll = stationsEl.scrollLeft;
         didDrag = false;
         isDraggingStations = true;
         stationsEl.classList.add('dragging');
+        event.preventDefault();
       }, { passive: false });
 
       document.addEventListener('touchmove', (event) => {
@@ -945,17 +948,29 @@
         stationsEl.scrollLeft = dragStartScroll - delta;
       }, { passive: false });
 
-      function stopStationDrag(){
+      function stopStationDrag(event){
+        if (!isDraggingStations) return;
+
+        if (!didDrag && touchedStation) {
+          play(touchedStation.dataset.station, touchedStation.dataset.url);
+        }
+
+        touchedStation = null;
         isDraggingStations = false;
         stationsEl.classList.remove('dragging');
+        event.preventDefault();
       }
 
-      document.addEventListener('touchend', stopStationDrag);
-      document.addEventListener('touchcancel', stopStationDrag);
+      document.addEventListener('touchend', stopStationDrag, { passive: false });
+      document.addEventListener('touchcancel', stopStationDrag, { passive: false });
+
       stationsEl.addEventListener('click', (event) => {
-        if (didDrag) {
-          event.preventDefault();
-          event.stopPropagation();
+        const station = event.target.closest('.station');
+        if (!station) return;
+
+        event.preventDefault();
+        if (!didDrag) {
+          play(station.dataset.station, station.dataset.url);
         }
       }, true);
     }
