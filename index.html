@@ -228,31 +228,46 @@
       border-radius:20px;
       padding:12px;
       background:
-        linear-gradient(180deg, rgba(87,62,40,.72), rgba(30,22,17,.92));
+        linear-gradient(180deg, rgba(16,25,27,.94), rgba(8,12,14,.98));
       box-shadow:
-        inset 0 1px 0 rgba(255,248,225,.08),
-        inset 0 -10px 18px rgba(0,0,0,.22);
+        inset 0 1px 0 rgba(210,255,224,.08),
+        inset 0 -10px 18px rgba(0,0,0,.28);
+    }
+
+    .digital-display{
+      display:grid;
+      grid-template-columns:minmax(0, 1fr) auto;
+      gap:12px;
+      align-items:center;
+    }
+
+    .display-meta{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:6px;
     }
 
     .freq-label{
-      color:#d5ba91;
-      font-size:11px;
-      letter-spacing:.28em;
+      color:#8dffb8;
+      font-size:10px;
+      letter-spacing:.2em;
       text-transform:uppercase;
-      margin-bottom:8px;
     }
 
     .radio-station{
-      font-size:24px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size:26px;
       line-height:1;
-      font-weight:900;
-      letter-spacing:.04em;
-      margin:0 0 6px;
+      font-weight:800;
+      letter-spacing:0;
+      margin:0 0 8px;
       text-transform:uppercase;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      color:#fff3d6;
+      color:#b7ffd0;
+      text-shadow:0 0 12px rgba(29,185,84,.32);
     }
 
     .radio-status{
@@ -275,108 +290,9 @@
     }
 
     .status-text{
-      color:#dec8a8;
+      color:#b7d9c2;
       font-size:13px;
     }
-
-    .tuner-row{
-      display:grid;
-      grid-template-columns:minmax(0, 1fr) 108px;
-      gap:16px;
-      align-items:center;
-    }
-
-    .tuner-stack{
-      min-width:0;
-    }
-
-    .tuner{
-      position:relative;
-      height:48px;
-      border-radius:16px;
-      padding:0 14px;
-      background:
-        linear-gradient(180deg, rgba(253,236,194,.96), rgba(212,182,126,.90));
-      border:1px solid rgba(104,67,28,.55);
-      display:flex;
-      align-items:center;
-      overflow:hidden;
-      box-shadow:
-        inset 0 1px 0 rgba(255,251,231,.65),
-        inset 0 -8px 10px rgba(112,77,31,.20);
-    }
-
-    .tuner::before{
-      content:"";
-      position:absolute;
-      inset:50% 14px auto;
-      height:2px;
-      transform:translateY(-50%);
-      background:linear-gradient(90deg, rgba(82,49,18,.28), rgba(82,49,18,.78), rgba(82,49,18,.28));
-    }
-
-    .tuner-scale{
-      position:relative;
-      z-index:1;
-      display:flex;
-      justify-content:space-between;
-      width:100%;
-      color:#6b4218;
-      font-size:12px;
-      font-weight:700;
-      font-variant-numeric:tabular-nums;
-    }
-
-    .tuner-needle{
-      position:absolute;
-      top:6px;
-      bottom:6px;
-      left:var(--needle-pos, 50%);
-      width:3px;
-      border-radius:999px;
-      transform:translateX(-50%);
-      background:linear-gradient(180deg, #9b140d, #5a0b07);
-      box-shadow:0 0 8px rgba(155,20,13,.28);
-    }
-
-    .radio-bottom{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      margin-top:10px;
-    }
-
-    .signal{
-      display:flex;
-      align-items:flex-end;
-      gap:6px;
-      min-height:28px;
-    }
-
-    .signal span{
-      width:8px;
-      border-radius:999px;
-      background:linear-gradient(180deg, rgba(126,255,177,.95), rgba(23,164,88,.55));
-      box-shadow:0 0 10px rgba(29,185,84,.28);
-      opacity:.35;
-      transform-origin:bottom;
-      transition:opacity .2s ease, transform .2s ease;
-    }
-
-    .signal span:nth-child(1){ height:8px; }
-    .signal span:nth-child(2){ height:14px; }
-    .signal span:nth-child(3){ height:20px; }
-    .signal span:nth-child(4){ height:26px; }
-
-    .signal.active span{
-      opacity:1;
-      animation:equalize 1.1s ease-in-out infinite;
-    }
-
-    .signal.active span:nth-child(2){ animation-delay:.15s; }
-    .signal.active span:nth-child(3){ animation-delay:.3s; }
-    .signal.active span:nth-child(4){ animation-delay:.45s; }
 
     .radio-caption{
       color:#d9c29b;
@@ -390,12 +306,12 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      gap:10px;
+      gap:6px;
     }
 
     .power-knob{
-      width:92px;
-      height:92px;
+      width:64px;
+      height:64px;
       border-radius:50%;
       border:1px solid rgba(255,223,179,.18);
       background:
@@ -407,6 +323,7 @@
         0 16px 30px rgba(0,0,0,.24);
       color:#fff2d1;
       font-weight:900;
+      font-size:10px;
       letter-spacing:.12em;
       text-transform:uppercase;
       cursor:pointer;
@@ -416,10 +333,10 @@
     .power-knob::before{
       content:"";
       position:absolute;
-      top:13px;
+      top:8px;
       left:50%;
-      width:6px;
-      height:20px;
+      width:5px;
+      height:13px;
       transform:translateX(-50%);
       border-radius:999px;
       background:#fff5cb;
@@ -437,19 +354,10 @@
       .radio-face{
         display:block;
       }
-
-      .tuner-row{
-        grid-template-columns:1fr;
-      }
     }
 
     audio{
       display:none;
-    }
-
-    @keyframes equalize{
-      0%, 100%{ transform:scaleY(.55); }
-      50%{ transform:scaleY(1); }
     }
 
     .stations{
@@ -663,7 +571,7 @@
       }
 
       .radio-station{
-        font-size:14px;
+        font-size:18px;
         margin-bottom:2px;
       }
 
@@ -676,32 +584,13 @@
         font-size:9px;
       }
 
-      .tuner-row{
-        grid-template-columns:minmax(0, 1fr) 56px;
-        gap:8px;
-      }
-
-      .tuner{
-        height:22px;
-        border-radius:7px;
-        padding:0 10px;
-      }
-
-      .tuner-scale{
-        font-size:7px;
-      }
-
-      .radio-bottom{
-        display:none;
-      }
-
       .power-wrap{
         gap:2px;
       }
 
       .power-knob{
-        width:46px;
-        height:46px;
+        width:48px;
+        height:48px;
         font-size:8px;
       }
 
@@ -751,46 +640,21 @@
 
             <div class="radio-face">
               <div class="radio-panel">
-                <div class="freq-label">On Air</div>
-                <div class="radio-station" id="nowTitle">Radio Off</div>
-
-                <div class="radio-status">
-                  <span class="status-pill" id="bandLabel">FM</span>
-                  <span class="status-text" id="nowStatus">Select a station to tune in</span>
-                </div>
-
-                <div class="tuner-row">
-                  <div class="tuner-stack">
-                    <div class="tuner" id="tuner">
-                      <div class="tuner-needle" id="tunerNeedle"></div>
-                      <div class="tuner-scale">
-                        <span>88</span>
-                        <span>92</span>
-                        <span>96</span>
-                        <span>100</span>
-                        <span>104</span>
-                        <span>108</span>
-                      </div>
+                <div class="digital-display">
+                  <div>
+                    <div class="display-meta">
+                      <span class="freq-label">Digital Radio</span>
+                      <span class="status-pill" id="bandLabel">FM</span>
+                    </div>
+                    <div class="radio-station" id="nowTitle">Radio Off</div>
+                    <div class="radio-status">
+                      <span class="status-text" id="nowStatus">Select a station to tune in</span>
                     </div>
                   </div>
-
                   <div class="power-wrap">
                     <button class="power-knob" onclick="stopRadio()">Stop</button>
                     <div class="power-label">Power</div>
                   </div>
-                </div>
-
-                <div class="radio-bottom">
-                  <div>
-                    <div class="signal" id="signalBars">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="radio-caption">Signal Strength</div>
-                  </div>
-                  <div class="radio-caption" id="dialLabel">Tune to begin</div>
                 </div>
               </div>
             </div>
@@ -887,24 +751,8 @@
     const nowTitle = document.getElementById('nowTitle');
     const nowStatus = document.getElementById('nowStatus');
     const liveBadge = document.getElementById('liveBadge');
-    const dialLabel = document.getElementById('dialLabel');
-    const tuner = document.getElementById('tuner');
-    const signalBars = document.getElementById('signalBars');
     const stationsEl = document.querySelector('.stations');
     const stationButtons = document.querySelectorAll('.stations .station');
-
-    const stationDialMap = {
-      "RTE 1": 22,
-      "Sunshine 106.8": 88,
-      "East Coast FM": 58,
-      "2FM": 46,
-      "Q102": 78,
-      "RTE Lyric FM": 32
-    };
-
-    function setDial(position){
-      tuner.style.setProperty('--needle-pos', `${position}%`);
-    }
 
     function setActiveStation(name){
       stationButtons.forEach((button) => {
@@ -975,16 +823,11 @@
       }, true);
     }
 
-    setDial(50);
-
     function play(name, url){
       setActiveStation(name);
       nowTitle.textContent = name;
       nowStatus.textContent = 'Tuning...';
       liveBadge.textContent = 'Live';
-      dialLabel.textContent = 'Locked';
-      signalBars.classList.add('active');
-      setDial(stationDialMap[name] ?? 50);
       audio.src = url;
 
       audio.play()
@@ -995,8 +838,6 @@
           setActiveStation();
           nowStatus.textContent = 'Signal unavailable';
           liveBadge.textContent = 'Error';
-          dialLabel.textContent = 'Retune';
-          signalBars.classList.remove('active');
         });
     }
 
@@ -1008,9 +849,6 @@
       nowTitle.textContent = 'Radio Off';
       nowStatus.textContent = 'Select a station to tune in';
       liveBadge.textContent = 'Standby';
-      dialLabel.textContent = 'Tune to begin';
-      signalBars.classList.remove('active');
-      setDial(50);
     }
   </script>
 </body>
