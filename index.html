@@ -27,6 +27,7 @@
       --tile-size:170px;
       --station-tile-size:190px;
       --spotify-slot:170px;
+      --spotify-card-height:230px;
     }
 
     body.theme-light{
@@ -585,6 +586,7 @@
       width:100%;
       min-width:0;
       min-height:var(--spotify-slot);
+      height:var(--spotify-card-height);
       display:flex;
       flex-direction:column;
       justify-self:stretch;
@@ -593,10 +595,12 @@
 
     .spotify-card .bd{
       width:100%;
+      flex:1;
       display:flex;
       justify-content:center;
-      align-items:center;
-      padding-top:24px;
+      align-items:flex-end;
+      padding-top:0;
+      padding-bottom:14px;
     }
 
     .spotify-button{
@@ -645,6 +649,7 @@
         --tile-size:150px;
         --station-tile-size:190px;
         --spotify-slot:220px;
+        --spotify-card-height:194px;
       }
 
       .app{
@@ -670,7 +675,7 @@
       }
 
       .spotify-card .bd{
-        padding-top:34px;
+        padding-bottom:10px;
       }
 
       .radio-shell{
