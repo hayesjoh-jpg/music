@@ -224,21 +224,30 @@
 
     .radio-panel{
       min-width:0;
-      border:1px solid rgba(232,210,176,.18);
-      border-radius:20px;
+      border:1px solid rgba(170,218,255,.18);
+      border-radius:18px;
       padding:12px;
       background:
-        linear-gradient(180deg, rgba(16,25,27,.94), rgba(8,12,14,.98));
+        linear-gradient(180deg, rgba(19,24,36,.94), rgba(7,10,18,.98));
       box-shadow:
-        inset 0 1px 0 rgba(210,255,224,.08),
-        inset 0 -10px 18px rgba(0,0,0,.28);
+        inset 0 1px 0 rgba(214,239,255,.08),
+        inset 0 -10px 18px rgba(0,0,0,.32);
     }
 
-    .digital-display{
+    .vu-display{
       display:grid;
       grid-template-columns:minmax(0, 1fr) auto;
       gap:12px;
       align-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;
+      padding:10px 12px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        inset 0 -8px 16px rgba(0,0,0,.22),
+        0 8px 20px rgba(0,0,0,.22);
     }
 
     .display-meta{
@@ -249,7 +258,7 @@
     }
 
     .freq-label{
-      color:#8dffb8;
+      color:#8fb7d3;
       font-size:10px;
       letter-spacing:.2em;
       text-transform:uppercase;
@@ -259,15 +268,15 @@
       font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
       font-size:26px;
       line-height:1;
-      font-weight:800;
+      font-weight:900;
       letter-spacing:0;
       margin:0 0 8px;
       text-transform:uppercase;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      color:#b7ffd0;
-      text-shadow:0 0 12px rgba(29,185,84,.32);
+      color:#e8f7ff;
+      text-shadow:0 0 12px rgba(91,192,255,.24);
     }
 
     .radio-status{
@@ -280,9 +289,9 @@
     .status-pill{
       padding:5px 10px;
       border-radius:999px;
-      border:1px solid rgba(255,226,178,.14);
-      background:rgba(255,236,199,.08);
-      color:#ffe8bf;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.07);
+      color:#d9efff;
       font-size:11px;
       font-weight:800;
       letter-spacing:.12em;
@@ -290,8 +299,60 @@
     }
 
     .status-text{
-      color:#b7d9c2;
+      color:#b6c6d4;
       font-size:13px;
+      font-weight:700;
+    }
+
+    .vu-meters{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .vu-meter{
+      height:28px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,.08) 0,
+          rgba(255,255,255,.08) 2px,
+          transparent 2px,
+          transparent 14px
+        ),
+        linear-gradient(90deg, rgba(49,214,113,.28), rgba(239,203,74,.26), rgba(255,82,82,.28));
+      overflow:hidden;
+      position:relative;
+    }
+
+    .vu-fill{
+      position:absolute;
+      inset:0 auto 0 0;
+      width:22%;
+      border-radius:inherit;
+      background:linear-gradient(90deg, rgba(82,255,145,.86), rgba(255,221,88,.88), rgba(255,88,88,.92));
+      box-shadow:0 0 16px rgba(82,255,145,.34);
+      transform-origin:left center;
+      opacity:.38;
+    }
+
+    .vu-display.is-playing .vu-fill{
+      opacity:1;
+      animation:vuPulse .9s ease-in-out infinite;
+    }
+
+    .vu-display.is-playing .vu-meter:nth-child(2) .vu-fill{
+      animation-delay:.18s;
+    }
+
+    @keyframes vuPulse{
+      0%, 100%{ width:28%; }
+      35%{ width:72%; }
+      58%{ width:48%; }
+      78%{ width:88%; }
     }
 
     .radio-caption{
@@ -640,15 +701,19 @@
 
             <div class="radio-face">
               <div class="radio-panel">
-                <div class="digital-display">
+                <div class="vu-display" id="vuDisplay">
                   <div>
                     <div class="display-meta">
-                      <span class="freq-label">Digital Radio</span>
+                      <span class="freq-label">VU Monitor</span>
                       <span class="status-pill" id="bandLabel">FM</span>
                     </div>
                     <div class="radio-station" id="nowTitle">Radio Off</div>
                     <div class="radio-status">
                       <span class="status-text" id="nowStatus">Select a station to tune in</span>
+                    </div>
+                    <div class="vu-meters" aria-hidden="true">
+                      <div class="vu-meter"><span class="vu-fill"></span></div>
+                      <div class="vu-meter"><span class="vu-fill"></span></div>
                     </div>
                   </div>
                   <div class="power-wrap">
@@ -751,6 +816,7 @@
     const nowTitle = document.getElementById('nowTitle');
     const nowStatus = document.getElementById('nowStatus');
     const liveBadge = document.getElementById('liveBadge');
+    const vuDisplay = document.getElementById('vuDisplay');
     const stationsEl = document.querySelector('.stations');
     const stationButtons = document.querySelectorAll('.stations .station');
 
@@ -825,6 +891,7 @@
 
     function play(name, url){
       setActiveStation(name);
+      vuDisplay.classList.add('is-playing');
       nowTitle.textContent = name;
       nowStatus.textContent = 'Tuning...';
       liveBadge.textContent = 'Live';
@@ -836,6 +903,7 @@
         })
         .catch(() => {
           setActiveStation();
+          vuDisplay.classList.remove('is-playing');
           nowStatus.textContent = 'Signal unavailable';
           liveBadge.textContent = 'Error';
         });
@@ -846,6 +914,7 @@
       audio.removeAttribute('src');
       audio.load();
       setActiveStation();
+      vuDisplay.classList.remove('is-playing');
       nowTitle.textContent = 'Radio Off';
       nowStatus.textContent = 'Select a station to tune in';
       liveBadge.textContent = 'Standby';
