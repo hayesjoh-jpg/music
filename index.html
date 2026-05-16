@@ -463,6 +463,34 @@
       -webkit-overflow-scrolling:touch;
     }
 
+    .stations.dragging{
+      cursor:grabbing;
+      scroll-snap-type:none;
+    }
+
+    .station-scroll-controls{
+      display:flex;
+      gap:6px;
+    }
+
+    .station-scroll-btn{
+      width:28px;
+      height:28px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      font-size:16px;
+      font-weight:900;
+      line-height:1;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .station-scroll-btn:active{
+      transform:translateY(1px);
+    }
+
     .stations .station{
       flex:0 0 var(--station-tile-size);
       width:var(--station-tile-size);
@@ -784,7 +812,10 @@
         <section class="card" style="grid-column: 1 / -1;">
           <div class="hd">
           <h2>Stations</h2>
-          <span></span>
+          <div class="station-scroll-controls" aria-label="Station list controls">
+            <button class="station-scroll-btn" type="button" onclick="scrollStations(-1)" aria-label="Scroll stations left">&lt;</button>
+            <button class="station-scroll-btn" type="button" onclick="scrollStations(1)" aria-label="Scroll stations right">&gt;</button>
+          </div>
         </div>
         <div class="bd">
           <div class="stations">
@@ -856,6 +887,7 @@
     const dialLabel = document.getElementById('dialLabel');
     const tuner = document.getElementById('tuner');
     const signalBars = document.getElementById('signalBars');
+    const stationsEl = document.querySelector('.stations');
     const stationButtons = document.querySelectorAll('.stations .station');
 
     const stationDialMap = {
@@ -875,6 +907,52 @@
       stationButtons.forEach((button) => {
         button.classList.toggle('active-station', button.dataset.station === name);
       });
+    }
+
+    function scrollStations(direction){
+      if (!stationsEl) return;
+
+      const firstStation = stationsEl.querySelector('.station');
+      const distance = firstStation ? firstStation.offsetWidth + 16 : 260;
+      stationsEl.scrollBy({ left: direction * distance, behavior: 'smooth' });
+    }
+
+    if (stationsEl) {
+      let dragStartX = 0;
+      let dragStartScroll = 0;
+      let didDrag = false;
+
+      stationsEl.addEventListener('pointerdown', (event) => {
+        dragStartX = event.clientX;
+        dragStartScroll = stationsEl.scrollLeft;
+        didDrag = false;
+        stationsEl.classList.add('dragging');
+        stationsEl.setPointerCapture(event.pointerId);
+      });
+
+      stationsEl.addEventListener('pointermove', (event) => {
+        if (!stationsEl.classList.contains('dragging')) return;
+
+        const delta = event.clientX - dragStartX;
+        if (Math.abs(delta) > 6) didDrag = true;
+        stationsEl.scrollLeft = dragStartScroll - delta;
+      });
+
+      function stopStationDrag(event){
+        stationsEl.classList.remove('dragging');
+        if (stationsEl.hasPointerCapture(event.pointerId)) {
+          stationsEl.releasePointerCapture(event.pointerId);
+        }
+      }
+
+      stationsEl.addEventListener('pointerup', stopStationDrag);
+      stationsEl.addEventListener('pointercancel', stopStationDrag);
+      stationsEl.addEventListener('click', (event) => {
+        if (didDrag) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      }, true);
     }
 
     setDial(50);
