@@ -459,7 +459,9 @@
       overflow-y:hidden;
       padding:4px 4px 12px;
       scroll-snap-type:x proximity;
-      touch-action:pan-x;
+      touch-action:none;
+      overscroll-behavior-x:contain;
+      user-select:none;
       -webkit-overflow-scrolling:touch;
     }
 
@@ -498,6 +500,7 @@
       max-width:var(--station-tile-size);
       min-height:var(--station-tile-size);
       scroll-snap-align:start;
+      touch-action:none;
     }
 
     .station{
@@ -921,16 +924,18 @@
       let touchStartX = 0;
       let dragStartScroll = 0;
       let didDrag = false;
+      let isDraggingStations = false;
 
       stationsEl.addEventListener('touchstart', (event) => {
         touchStartX = event.touches[0].clientX;
         dragStartScroll = stationsEl.scrollLeft;
         didDrag = false;
+        isDraggingStations = true;
         stationsEl.classList.add('dragging');
-      }, { passive: true });
+      }, { passive: false });
 
-      stationsEl.addEventListener('touchmove', (event) => {
-        if (!stationsEl.classList.contains('dragging')) return;
+      document.addEventListener('touchmove', (event) => {
+        if (!isDraggingStations || event.touches.length === 0) return;
 
         const delta = event.touches[0].clientX - touchStartX;
         if (Math.abs(delta) > 6) {
@@ -941,11 +946,12 @@
       }, { passive: false });
 
       function stopStationDrag(){
+        isDraggingStations = false;
         stationsEl.classList.remove('dragging');
       }
 
-      stationsEl.addEventListener('touchend', stopStationDrag);
-      stationsEl.addEventListener('touchcancel', stopStationDrag);
+      document.addEventListener('touchend', stopStationDrag);
+      document.addEventListener('touchcancel', stopStationDrag);
       stationsEl.addEventListener('click', (event) => {
         if (didDrag) {
           event.preventDefault();
