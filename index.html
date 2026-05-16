@@ -25,7 +25,7 @@
       --glowA: rgba(29,185,84,.28);
       --glowB: rgba(80,145,255,.22);
       --tile-size:170px;
-      --station-tile-size:260px;
+      --station-tile-size:190px;
       --spotify-slot:170px;
     }
 
@@ -571,7 +571,7 @@
     @media (max-width: 900px){
       :root{
         --tile-size:120px;
-        --station-tile-size:180px;
+        --station-tile-size:150px;
       }
 
       .app{
@@ -599,7 +599,7 @@
     @media (max-height: 1100px) and (orientation: landscape){
       :root{
         --tile-size:150px;
-        --station-tile-size:260px;
+        --station-tile-size:190px;
         --spotify-slot:220px;
       }
 
@@ -918,35 +918,34 @@
     }
 
     if (stationsEl) {
-      let dragStartX = 0;
+      let touchStartX = 0;
       let dragStartScroll = 0;
       let didDrag = false;
 
-      stationsEl.addEventListener('pointerdown', (event) => {
-        dragStartX = event.clientX;
+      stationsEl.addEventListener('touchstart', (event) => {
+        touchStartX = event.touches[0].clientX;
         dragStartScroll = stationsEl.scrollLeft;
         didDrag = false;
         stationsEl.classList.add('dragging');
-        stationsEl.setPointerCapture(event.pointerId);
-      });
+      }, { passive: true });
 
-      stationsEl.addEventListener('pointermove', (event) => {
+      stationsEl.addEventListener('touchmove', (event) => {
         if (!stationsEl.classList.contains('dragging')) return;
 
-        const delta = event.clientX - dragStartX;
-        if (Math.abs(delta) > 6) didDrag = true;
-        stationsEl.scrollLeft = dragStartScroll - delta;
-      });
-
-      function stopStationDrag(event){
-        stationsEl.classList.remove('dragging');
-        if (stationsEl.hasPointerCapture(event.pointerId)) {
-          stationsEl.releasePointerCapture(event.pointerId);
+        const delta = event.touches[0].clientX - touchStartX;
+        if (Math.abs(delta) > 6) {
+          didDrag = true;
+          event.preventDefault();
         }
+        stationsEl.scrollLeft = dragStartScroll - delta;
+      }, { passive: false });
+
+      function stopStationDrag(){
+        stationsEl.classList.remove('dragging');
       }
 
-      stationsEl.addEventListener('pointerup', stopStationDrag);
-      stationsEl.addEventListener('pointercancel', stopStationDrag);
+      stationsEl.addEventListener('touchend', stopStationDrag);
+      stationsEl.addEventListener('touchcancel', stopStationDrag);
       stationsEl.addEventListener('click', (event) => {
         if (didDrag) {
           event.preventDefault();
