@@ -452,9 +452,18 @@
     }
 
     .stations{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      display:flex;
       gap:16px;
+      overflow-x:auto;
+      overflow-y:hidden;
+      padding:4px 4px 12px;
+      scroll-snap-type:x proximity;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .stations .station{
+      flex:0 0 var(--tile-size);
+      scroll-snap-align:start;
     }
 
     .station{
@@ -548,7 +557,6 @@
       }
 
       .stations{
-        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap:12px;
       }
     }
@@ -669,8 +677,8 @@
       }
 
       .stations{
-        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap:8px;
+        padding:4px 4px 10px;
       }
 
       .station{
@@ -787,6 +795,14 @@
             <button class="station" data-station="2FM" onclick="play('2FM','https://icecast.rte.ie/2fm')">
               <img src="2fm.png" alt="RTE 2 FM">
             </button>
+
+            <button class="station" data-station="Q102" onclick="play('Q102','https://wg.cdn.tibus.net/q102MP3128')">
+              <img src="q102.svg" alt="Dublin's Q102">
+            </button>
+
+            <button class="station" data-station="RTE Lyric FM" onclick="play('RTE Lyric FM','https://icecast2.rte.ie/lyric')">
+              <img src="rtelyricfm.svg" alt="RTE Lyric FM">
+            </button>
           </div>
         </div>
       </section>
@@ -838,7 +854,9 @@
       "RTE 1": 22,
       "Sunshine 106.8": 88,
       "East Coast FM": 58,
-      "2FM": 46
+      "2FM": 46,
+      "Q102": 78,
+      "RTE Lyric FM": 32
     };
 
     function setDial(position){
