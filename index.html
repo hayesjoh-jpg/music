@@ -795,7 +795,7 @@
                           <span class="status-pill" id="bandLabel">FM</span>
                           <span class="freq-label">MHz</span>
                         </div>
-                        <div class="stereo-frequency">87.5<small>MHz</small></div>
+                        <div class="stereo-frequency"><span id="frequencyReadout">87.5</span><small>MHz</small></div>
                         <div class="radio-station" id="nowTitle">Radio Off</div>
                         <div class="radio-status">
                           <span class="status-text" id="nowStatus">Select a station to tune in</span>
@@ -927,8 +927,18 @@
     const nowStatus = document.getElementById('nowStatus');
     const liveBadge = document.getElementById('liveBadge');
     const stereoFace = document.getElementById('stereoFace');
+    const frequencyReadout = document.getElementById('frequencyReadout');
     const stationsEl = document.querySelector('.stations');
     const stationButtons = document.querySelectorAll('.stations .station');
+
+    const stationFrequencyMap = {
+      "RTE 1": "88.5",
+      "Sunshine 106.8": "106.8",
+      "East Coast FM": "96.2",
+      "2FM": "90.7",
+      "Q102": "102.2",
+      "RTE Lyric FM": "96.7"
+    };
 
     function setActiveStation(name){
       stationButtons.forEach((button) => {
@@ -1005,6 +1015,7 @@
       nowTitle.textContent = name;
       nowStatus.textContent = 'Tuning...';
       liveBadge.textContent = 'Live';
+      frequencyReadout.textContent = stationFrequencyMap[name] ?? '87.5';
       audio.src = url;
 
       audio.play()
@@ -1028,6 +1039,7 @@
       nowTitle.textContent = 'Radio Off';
       nowStatus.textContent = 'Select a station to tune in';
       liveBadge.textContent = 'Standby';
+      frequencyReadout.textContent = '87.5';
     }
   </script>
 </body>
