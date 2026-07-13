@@ -912,14 +912,20 @@
 
     function openSpotify(){
       const attempts = [
-        'intent://open.spotify.com/#Intent;scheme=https;package=com.spotify.music;S.browser_fallback_url=spotify%3A%2F%2F;end',
-        'intent://open/#Intent;scheme=spotify;package=com.spotify.music;S.browser_fallback_url=spotify%3A%2F%2F;end',
+        'intent://open.spotify.com/#Intent;scheme=https;package=com.spotify.music;end',
+        'intent://open/#Intent;scheme=spotify;package=com.spotify.music;end',
         'intent://launcher/#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.spotify.music;end'
       ];
 
       if (typeof nowStatus !== 'undefined') {
         nowStatus.textContent = 'Opening Spotify...';
       }
+
+      try{
+        if (window.fully && typeof window.fully.startApplication === 'function') {
+          window.fully.startApplication('com.spotify.music');
+        }
+      } catch (e) {}
 
       function launchExternal(url){
         try{
