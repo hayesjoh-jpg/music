@@ -911,25 +911,46 @@
     }
 
     function openSpotify(){
-      const spotifyUri = 'spotify:';
-      const spotifySchemeIntent = 'intent://#Intent;scheme=spotify;package=com.spotify.music;end';
-      const spotifyHttpsIntent = 'intent://open.spotify.com/#Intent;scheme=https;package=com.spotify.music;end';
+      const attempts = [
+        'intent://open.spotify.com/#Intent;scheme=https;package=com.spotify.music;S.browser_fallback_url=spotify%3A%2F%2F;end',
+        'intent://open/#Intent;scheme=spotify;package=com.spotify.music;S.browser_fallback_url=spotify%3A%2F%2F;end',
+        'intent://launcher/#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.spotify.music;end',
+        'spotify://',
+        'spotify:'
+      ];
 
-      try{
-        window.location.href = spotifyUri;
-      } catch (e) {}
+      if (typeof nowStatus !== 'undefined') {
+        nowStatus.textContent = 'Opening Spotify...';
+      }
+
+      function launchExternal(url){
+        try{
+          const link = document.createElement('a');
+          link.href = url;
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          setTimeout(() => link.remove(), 500);
+        } catch (e) {
+          try{
+            window.location.href = url;
+          } catch (ignored) {}
+        }
+      }
+
+      attempts.forEach((url, index) => {
+        setTimeout(() => {
+          if (document.visibilityState === 'visible') {
+            launchExternal(url);
+          }
+        }, index * 350);
+      });
 
       setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          window.location.href = spotifySchemeIntent;
+        if (document.visibilityState === 'visible' && typeof nowStatus !== 'undefined') {
+          nowStatus.textContent = 'Spotify launch blocked';
         }
-      }, 250);
-
-      setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          window.location.href = spotifyHttpsIntent;
-        }
-      }, 900);
+      }, attempts.length * 350 + 500);
     }
 
     const audio = document.getElementById('radio');
