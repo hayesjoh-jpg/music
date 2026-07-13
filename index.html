@@ -822,11 +822,11 @@
                       </div>
                     </div>
 
-                    <div class="stereo-buttons" aria-hidden="true">
+                    <div class="stereo-buttons">
                       <button class="stereo-btn" type="button">&#9664;&#9664;</button>
                       <button class="stereo-btn" type="button">&#9654;&#9654;</button>
-                      <button class="stereo-btn" type="button">VOL+</button>
-                      <button class="stereo-btn" type="button">VOL-</button>
+                      <button class="stereo-btn" type="button" onclick="changePortalVolume(10)">VOL+</button>
+                      <button class="stereo-btn" type="button" onclick="changePortalVolume(-10)">VOL-</button>
                       <button class="stereo-btn" type="button">1/PAU</button>
                       <button class="stereo-btn" type="button">2/INT</button>
                       <button class="stereo-btn" type="button">3/RPT</button>
@@ -964,6 +964,7 @@
     const frequencyReadout = document.getElementById('frequencyReadout');
     const stationsEl = document.querySelector('.stations');
     const stationButtons = document.querySelectorAll('.stations .station');
+    const musicStream = 3;
 
     const stationFrequencyMap = {
       "RTE 1": "88.5",
@@ -978,6 +979,26 @@
       stationButtons.forEach((button) => {
         button.classList.toggle('active-station', button.dataset.station === name);
       });
+    }
+
+    function changePortalVolume(delta){
+      let nextVolume;
+
+      try{
+        if (window.fully && typeof window.fully.getAudioVolume === 'function' && typeof window.fully.setAudioVolume === 'function') {
+          const currentVolume = Number(window.fully.getAudioVolume(musicStream));
+          nextVolume = Math.max(0, Math.min(100, currentVolume + delta));
+          window.fully.setAudioVolume(nextVolume, musicStream);
+        }
+      } catch (e) {}
+
+      if (typeof nextVolume === 'undefined') {
+        const currentVolume = Math.round(audio.volume * 100);
+        nextVolume = Math.max(0, Math.min(100, currentVolume + delta));
+        audio.volume = nextVolume / 100;
+      }
+
+      nowStatus.textContent = `Volume ${nextVolume}%`;
     }
 
     function scrollStations(direction){
