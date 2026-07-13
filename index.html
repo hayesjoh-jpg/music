@@ -911,10 +911,7 @@
     }
 
     function openSpotify(){
-      const attempts = [
-        'intent:#Intent;package=com.spotify.music;end',
-        'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.spotify.music;end'
-      ];
+      const spotifyLauncherIntent = 'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.spotify.music;end';
 
       if (typeof nowStatus !== 'undefined') {
         nowStatus.textContent = 'Opening Spotify...';
@@ -923,6 +920,7 @@
       try{
         if (window.fully && typeof window.fully.startApplication === 'function') {
           window.fully.startApplication('com.spotify.music');
+          return;
         }
       } catch (e) {}
 
@@ -941,19 +939,13 @@
         }
       }
 
-      attempts.forEach((url, index) => {
-        setTimeout(() => {
-          if (document.visibilityState === 'visible') {
-            launchExternal(url);
-          }
-        }, index * 350);
-      });
+      launchExternal(spotifyLauncherIntent);
 
       setTimeout(() => {
         if (document.visibilityState === 'visible' && typeof nowStatus !== 'undefined') {
           nowStatus.textContent = 'Spotify launch blocked';
         }
-      }, attempts.length * 350 + 500);
+      }, 900);
     }
 
     const audio = document.getElementById('radio');
