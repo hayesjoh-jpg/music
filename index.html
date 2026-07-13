@@ -912,9 +912,8 @@
 
     function openSpotify(){
       const attempts = [
-        'intent://open.spotify.com/#Intent;scheme=https;package=com.spotify.music;end',
-        'intent://open/#Intent;scheme=spotify;package=com.spotify.music;end',
-        'intent://launcher/#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.spotify.music;end'
+        'intent:#Intent;package=com.spotify.music;end',
+        'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.spotify.music;end'
       ];
 
       if (typeof nowStatus !== 'undefined') {
