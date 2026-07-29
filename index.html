@@ -27,7 +27,6 @@
       --tile-size:170px;
       --station-tile-size:190px;
       --spotify-slot:210px;
-      --spotify-card-height:280px;
       --app-tile-size:100px;
     }
 
@@ -90,7 +89,7 @@
       display:grid;
       grid-template-columns: minmax(0, 1fr) var(--spotify-slot);
       gap:14px;
-      align-items:start;
+      align-items:stretch;
     }
 
     @media (max-width: 900px){
@@ -590,11 +589,11 @@
       width:100%;
       min-width:0;
       min-height:var(--spotify-slot);
-      height:var(--spotify-card-height);
+      height:100%;
       display:flex;
       flex-direction:column;
       justify-self:stretch;
-      align-self:start;
+      align-self:stretch;
       margin-top:0;
     }
 
@@ -662,7 +661,6 @@
         --tile-size:150px;
         --station-tile-size:190px;
         --spotify-slot:260px;
-        --spotify-card-height:240px;
         --app-tile-size:86px;
       }
 
@@ -694,7 +692,7 @@
       }
 
       .spotify-card{
-        margin-top:42px;
+        margin-top:0;
       }
 
       .radio-shell{
