@@ -28,6 +28,7 @@
       --station-tile-size:190px;
       --spotify-slot:170px;
       --spotify-card-height:230px;
+      --app-tile-size:78px;
     }
 
     body.theme-light{
@@ -601,16 +602,24 @@
       width:100%;
       flex:1;
       display:flex;
+      flex-direction:column;
       justify-content:center;
-      align-items:flex-end;
+      align-items:center;
+      gap:12px;
       padding-top:0;
-      padding-bottom:14px;
+      padding-bottom:10px;
     }
 
-    .spotify-button{
-      width:var(--tile-size);
-      min-height:var(--tile-size);
+    .app-button{
+      width:var(--app-tile-size);
+      min-width:var(--app-tile-size);
+      min-height:var(--app-tile-size);
       aspect-ratio:1 / 1;
+      border-radius:14px;
+    }
+
+    .app-button img{
+      border-radius:12px;
     }
 
     .hint{
@@ -654,6 +663,7 @@
         --station-tile-size:190px;
         --spotify-slot:220px;
         --spotify-card-height:194px;
+        --app-tile-size:64px;
       }
 
       .app{
@@ -679,7 +689,8 @@
       }
 
       .spotify-card .bd{
-        padding-bottom:10px;
+        gap:10px;
+        padding-bottom:8px;
       }
 
       .spotify-card{
@@ -854,12 +865,15 @@
 
         <section class="card spotify-card">
           <div class="hd">
-            <h2>Spotify</h2>
+            <h2>Music</h2>
             <span></span>
           </div>
           <div class="bd">
-            <button class="station spotify-button" onclick="openSpotify()" aria-label="Open Spotify">
+            <button class="station app-button" onclick="openSpotify()" aria-label="Open Spotify">
               <img src="spotify.svg" alt="Spotify">
+            </button>
+            <button class="station app-button" onclick="openAppleMusic()" aria-label="Open Apple Music">
+              <img src="applemusic.svg" alt="Apple Music">
             </button>
           </div>
         </section>
@@ -944,6 +958,30 @@
           nowStatus.textContent = 'Spotify launch blocked';
         }
       }, 900);
+    }
+
+    function openAppleMusic(){
+      const appleMusicPackage = 'com.apple.android.music';
+      const appleMusicLauncherIntent = `intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=${appleMusicPackage};end`;
+
+      if (typeof nowStatus !== 'undefined') {
+        nowStatus.textContent = 'Opening Apple Music...';
+      }
+
+      try{
+        if (window.fully && typeof window.fully.startApplication === 'function') {
+          window.fully.startApplication(appleMusicPackage);
+          return;
+        }
+      } catch (e) {}
+
+      try{
+        window.location.href = appleMusicLauncherIntent;
+      } catch (e) {
+        if (typeof nowStatus !== 'undefined') {
+          nowStatus.textContent = 'Apple Music launch blocked';
+        }
+      }
     }
 
     const audio = document.getElementById('radio');
