@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Radio Nova</title>
+  <desc id="desc">Radio Nova station tile.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#101820"/>
+      <stop offset=".48" stop-color="#253c55"/>
+      <stop offset="1" stop-color="#f4b942"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="42" fill="url(#bg)"/>
+  <circle cx="382" cy="126" r="56" fill="#f4b942" opacity=".95"/>
+  <g fill="#fff" font-family="Arial, Helvetica, sans-serif" font-weight="900">
+    <text x="56" y="210" font-size="58" letter-spacing="3">RADIO</text>
+    <text x="56" y="315" font-size="88" letter-spacing="2">NOVA</text>
+  </g>
+  <path d="M60 356h320" stroke="#f4b942" stroke-width="18" stroke-linecap="round"/>
+  <path d="M60 395h250" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity=".9"/>
+</svg>
